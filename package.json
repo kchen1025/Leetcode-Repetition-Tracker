@@ -14,7 +14,7 @@
     "db-create": "npx knex migrate:make",
     "db-up": "npx knex migrate:latest",
     "db-down": "npx knex migrate:rollback",
-    "heroku-postbuild": "echo Running migrations in $NODE_ENV environment && knex migrate:latest"
+    "heroku-postbuild": "echo Running migrations in $NODE_ENV environment && knex migrate:latest && yarn run build"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
