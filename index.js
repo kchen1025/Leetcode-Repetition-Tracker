@@ -8,6 +8,7 @@ import { initDb } from "./models/index.js";
 import { apiRouter } from "./routes/api/index.js";
 import { authRouter } from "./routes/auth/index.js";
 import passportConfig from "./services/passport.js";
+import path from "path";
 passportConfig(passport);
 dotenv.config();
 
@@ -19,7 +20,7 @@ const app = express();
 // // we run the app through their command line tool. i don't want to to that, so here we are.
 // require("dotenv").config();
 
-// app.use(
+// app.use(app/index.js
 //   cookieSession({
 //     maxAge: 30 * 24 * 60 * 60 * 1000,
 //     keys: ["sdfsdfdsfdsdsfsdfdsfaertasdfadsrfsd"],
