@@ -13,8 +13,7 @@
     "build": "cd client && yarn && yarn build",
     "db-create": "npx knex migrate:make",
     "db-up": "npx knex migrate:latest",
-    "db-down": "npx knex migrate:rollback"
-    // "heroku-postbuild": "echo Running migrations in $NODE_ENV environment && knex migrate:latest"
+    "db-down": "npx knex migrate:rollback"    
   },
   "dependencies": {
     "body-parser": "^1.20.2",
