@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 // If using a version of node-postgres newer than 8.3, you need to manually parse
 // the DATABASE_URL because node-postgres no longer supports passing the connection
 // string directly to the client constructor. Heroku's DATABASE_URL includes SSL parameters.
-const { parse } = require("pg-connection-string");
+import parse from "pg-connection-string";
 
 // Parse the environment variable into an object
 const config = parse(process.env.DATABASE_URL);
