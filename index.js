@@ -46,7 +46,8 @@ const db = initDb();
 db.sequelize.sync();
 // END sequelize initialization
 
-app.use(express.static(path.join(__dirname, "public")));
+// Have Node serve the files for our built React app
+app.use(express.static(path.resolve(__dirname, "client/dist")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
