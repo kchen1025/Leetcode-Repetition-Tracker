@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 require("dotenv").config();
 
+let ssl = {};
 if (process.env.NODE_ENV === "production") {
   ssl = {
     rejectUnauthorized: false,
