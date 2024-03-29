@@ -1,6 +1,12 @@
 import { Pool } from "pg";
 require("dotenv").config();
 
+if (process.env.NODE_ENV === "production") {
+  ssl = {
+    rejectUnauthorized: false,
+  };
+}
+
 // refresher on how to connect,
 // I use pg-cli for all direct database connections and elephantsql for easy instances setup
 // the password goes into your .pgpass file
@@ -8,4 +14,5 @@ require("dotenv").config();
 // pgcli -h <dbURL> -U <DBUSER> -d <DBNAME>'
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl,
 });
