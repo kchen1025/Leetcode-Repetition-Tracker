@@ -1,11 +1,56 @@
-const express = require('express')
-const path = require('path')
+import bodyParser from "body-parser";
+import cookieSession from "cookie-session";
+import dotenv from "dotenv";
+import express from "express";
+import passport from "passport";
+import session from "express-session";
+import { initDb } from "./models/index.js";
+import { apiRouter } from "./routes/api/index.js";
+import { authRouter } from "./routes/auth/index.js";
+import passportConfig from "./services/passport.js";
+passportConfig(passport);
+dotenv.config();
 
-const PORT = process.env.PORT || 5001
+const PORT = process.env.PORT || 5001;
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+const app = express();
+
+// // the reason we need both .dotenv and the heroku .env file, is that the .env file provided by heroku is not read unless
+// // we run the app through their command line tool. i don't want to to that, so here we are.
+// require("dotenv").config();
+
+// app.use(
+//   cookieSession({
+//     maxAge: 30 * 24 * 60 * 60 * 1000,
+//     keys: ["sdfsdfdsfdsdsfsdfdsfaertasdfadsrfsd"],
+//   })
+// );
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// BEGIN initialize sequelize connection
+const db = initDb();
+db.sequelize.sync();
+// END sequelize initialization
+
+// app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public")); // for POST requests, it attaches the body returned to req.body (express does not do this by default)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// routes go here, pull them out into different files later
+app.use("/api", apiRouter);
+app.use("/auth", authRouter);
+
+// .set("views", path.join(__dirname, "views"))
+// .set("view engine", "ejs")
+
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
