@@ -46,8 +46,7 @@ const db = initDb();
 db.sequelize.sync();
 // END sequelize initialization
 
-// app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("public")); // for POST requests, it attaches the body returned to req.body (express does not do this by default)
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
