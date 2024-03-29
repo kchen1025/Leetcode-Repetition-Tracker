@@ -8,7 +8,11 @@ import { initDb } from "./models/index.js";
 import { apiRouter } from "./routes/api/index.js";
 import { authRouter } from "./routes/auth/index.js";
 import passportConfig from "./services/passport.js";
+import { fileURLToPath } from "url";
 import path from "path";
+
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 passportConfig(passport);
 dotenv.config();
 
