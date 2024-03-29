@@ -46,7 +46,10 @@ const knexConfig = {
     client: "postgresql",
     connection: process.env.DATABASE_URL,
     migrations: {
-      tableName: "knex_migrations",
+      directory: __dirname + "/db/migrations",
+    },
+    seeds: {
+      directory: __dirname + "/db/seeds",
     },
   },
 };
