@@ -14,6 +14,7 @@ const initDb = () => {
         rejectUnauthorized: false, // Note: Setting this to false can introduce security vulnerabilities.
       },
     },
+    logging: false,
     pool: {
       max: 10,
       min: 0,
@@ -24,7 +25,7 @@ const initDb = () => {
   (async () => {
     try {
       await sequelize.authenticate();
-      console.log("Connection has been established successfully.");
+      console.log("DB connection has been established successfully.");
     } catch (error) {
       console.error("Unable to connect to the database:", error);
     }

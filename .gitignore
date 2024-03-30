@@ -12,3 +12,5 @@ npm-debug.log
 Dockerfile
 docker-compose.yml
 
+leetcode_questions.csv
+leetcode_notion.csv

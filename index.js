@@ -4,10 +4,10 @@ import dotenv from "dotenv";
 import express from "express";
 import passport from "passport";
 import session from "express-session";
-import { initDb } from "./models/index.js";
-import { apiRouter } from "./routes/api/index.js";
-import { authRouter } from "./routes/auth/index.js";
-import passportConfig from "./services/passport.js";
+import { initDb } from "./src/models/index.js";
+import { apiRouter } from "./src/routes/api/index.js";
+import { authRouter } from "./src/routes/auth/index.js";
+import passportConfig from "./src/services/passport.js";
 import { fileURLToPath } from "url";
 import path from "path";
 
