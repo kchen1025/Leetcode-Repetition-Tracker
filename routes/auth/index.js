@@ -14,12 +14,20 @@ authRouter.get(
   "/google/callback",
   passport.authenticate("google"),
   (req, res) => {
-    res.redirect("http://localhost:5173/");
+    if (process.env.NODE_ENV === "production") {
+      res.redirect("/");
+    } else {
+      res.redirect("http://localhost:5173/");
+    }
   }
 );
 
 authRouter.get("/logout", (req, res) => {
   req.logout((err) => {
-    res.redirect("http://localhost:5173/");
+    if (process.env.NODE_ENV === "production") {
+      res.redirect("/signin");
+    } else {
+      res.redirect("http://localhost:5173/");
+    }
   });
 });
