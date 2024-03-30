@@ -42,7 +42,7 @@ export default (passport) => {
             email,
             name: profile.displayName,
           });
-          done(null, newAccount[0].toJSON());
+          done(null, newAccount.toJSON());
         }
       }
     )
