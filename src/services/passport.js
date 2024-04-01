@@ -22,7 +22,6 @@ export default (passport) => {
         proxy: true,
       },
       async (accessToken, refreshToken, profile, done) => {
-        console.log("accesstoken", accessToken, refreshToken, profile);
         const Account = AccountController();
         const existingUser = await Account.findAll({
           where: { google_id: profile.id },

@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     API.get("/api/current_user")
       .then((response) => {
-        console.log("API RESPONSE USER", response);
         if (response) {
           setIsAuthenticated(true);
           setUser(response);

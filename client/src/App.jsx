@@ -1,6 +1,6 @@
+import "@fontsource/inter";
+
 import React, { useState, useEffect } from "react";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import { API } from "./utils";
 import { CssVarsProvider } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

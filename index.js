@@ -10,6 +10,8 @@ import { authRouter } from "./src/routes/auth/index.js";
 import passportConfig from "./src/services/passport.js";
 import { fileURLToPath } from "url";
 import path from "path";
+import redis from "redis";
+import RedisStore from "connect-redis";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -20,21 +22,23 @@ const PORT = process.env.PORT || 5001;
 
 const app = express();
 
-// // the reason we need both .dotenv and the heroku .env file, is that the .env file provided by heroku is not read unless
-// // we run the app through their command line tool. i don't want to to that, so here we are.
-// require("dotenv").config();
+const redisClient = redis.createClient({
+  url: process.env.REDIS_URL,
+});
+redisClient.connect().catch(console.error);
+redisClient.on("connect", () => {
+  console.log("Connected to Redis");
+});
 
-// app.use(app/index.js
-//   cookieSession({
-//     maxAge: 30 * 24 * 60 * 60 * 1000,
-//     keys: ["sdfsdfdsfdsdsfsdfdsfaertasdfadsrfsd"],
-//   })
-// );
 app.use(
   session({
+    store: new RedisStore({ client: redisClient }),
     secret: "keyboard cat",
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false, // prevents multiple redis keys from being created
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000, // Expires in 1 day (in ms)
+    },
   })
 );
 
@@ -54,9 +58,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes go here, pull them out into different files later
 app.use("/api", apiRouter);
 app.use("/auth", authRouter);
-
-// .set("views", path.join(__dirname, "views"))
-// .set("view engine", "ejs")
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {

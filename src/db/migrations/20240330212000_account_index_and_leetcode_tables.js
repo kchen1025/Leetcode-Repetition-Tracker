@@ -27,6 +27,7 @@ export async function up(knex) {
       answers text,
       time_taken int,
       redo boolean,
+      datetime_completed timestamptz,
       added timestamptz default now(),
       updated timestamptz default now(),
       CONSTRAINT fk_account

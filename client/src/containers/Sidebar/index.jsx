@@ -5,11 +5,13 @@ import List from "@mui/joy/List";
 import ListItem from "@mui/joy/ListItem";
 import ListItemButton from "@mui/joy/ListItemButton";
 import IconButton from "@mui/joy/IconButton";
+import Button from "@mui/joy/Button";
+
 import { MenuIcon } from "@/icons";
 import { useState, useEffect } from "react";
 import { API } from "@/utils";
 
-import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(false);
@@ -29,20 +31,14 @@ export default function Sidebar() {
   };
 
   useEffect(() => {
-    API.get("/api/current_user").then((data) => {
-      console.log("currentuser", data);
+    API.get("/api/emoji").then((data) => {
+      setEmoji(data.message);
     });
-  }, [[]]);
-
-  // useEffect(() => {
-  //   API.get("/api/emoji").then((data) => {
-  //     setEmoji(data.message);
-  //   });
-  // }, []);
+  }, []);
 
   return (
     <>
-      <Box sx={{ display: "flex", margin: 1 }}>
+      <Box display="flex" justifyContent="space-between" m={1}>
         <IconButton
           size="lg"
           variant="outlined"
@@ -51,10 +47,13 @@ export default function Sidebar() {
         >
           <MenuIcon />
         </IconButton>
+        <Button onClick={() => (window.location.href = "/auth/logout")}>
+          logout
+        </Button>
       </Box>
-      {/* <Box display="flex" justifyContent={"center"} fontSize={30}>
+      <Box display="flex" justifyContent={"center"} fontSize={30}>
         {emoji}
-      </Box> */}
+      </Box>
       <Drawer open={open} size="sm" onClose={toggleDrawer(false)}>
         <Box
           role="presentation"
