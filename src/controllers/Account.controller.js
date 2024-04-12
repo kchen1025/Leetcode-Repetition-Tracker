@@ -4,9 +4,9 @@ const Account = () => {
   const AccountModel = db.account;
 
   // declare custom classes within
-  AccountModel.yeet = async () => {
-    const whatever = AccountModel.findAll();
-    return whatever;
+  AccountModel.method = async () => {
+    const test = AccountModel.findAll();
+    return test;
   };
 
   // return the instance
