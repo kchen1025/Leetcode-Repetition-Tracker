@@ -70,6 +70,24 @@ export default function Sidebar() {
                 Home
               </ListItemButton>
             </ListItem>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  navigate("upload");
+                }}
+              >
+                Upload CSV
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  navigate("questions");
+                }}
+              >
+                Questions
+              </ListItemButton>
+            </ListItem>
           </List>
         </Box>
       </Drawer>

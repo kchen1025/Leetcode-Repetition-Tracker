@@ -6,6 +6,11 @@ import CssBaseline from "@mui/joy/CssBaseline";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
 import Home from "./containers/Home";
+import ChartMetaData, {
+  loader as ChartMetaDataLoader,
+} from "./containers/ChartMetaData";
+import CsvUploader from "./containers/CsvUploader";
+import Questions, { loader as QuestionsLoader } from "./containers/Questions";
 import Sidebar from "./containers/Sidebar";
 import SignIn from "./containers/SignIn";
 import { AuthProvider, useAuth } from "./context/AuthContext";
@@ -13,7 +18,7 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const RequireAuth = ({ children }) => {
   let location = useLocation();
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -23,7 +28,11 @@ const RequireAuth = ({ children }) => {
     return <Navigate to="/signin" state={{ from: location }} replace />;
   }
 
-  return children;
+  const enhancedChildren = React.Children.map(children, (child) =>
+    React.cloneElement(child, { user, isAuthenticated })
+  );
+
+  return <>{enhancedChildren}</>;
 };
 
 const router = createBrowserRouter([
@@ -47,6 +56,32 @@ const router = createBrowserRouter([
             <Home />
           </RequireAuth>
         ),
+      },
+      {
+        path: "/chart-meta-data/:topicId",
+        element: (
+          <RequireAuth>
+            <ChartMetaData />
+          </RequireAuth>
+        ),
+        loader: ChartMetaDataLoader,
+      },
+      {
+        path: "/upload",
+        element: (
+          <RequireAuth>
+            <CsvUploader />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: "/questions",
+        element: (
+          <RequireAuth>
+            <Questions />
+          </RequireAuth>
+        ),
+        loader: QuestionsLoader,
       },
     ],
   },

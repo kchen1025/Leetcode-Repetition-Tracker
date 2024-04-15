@@ -1,24 +1,21 @@
 import { Bar } from "@nivo/bar";
 import { useEffect, useState } from "react";
-import { API } from "@/utils";
-import { useAuth } from "@/context/AuthContext";
+
 import { Sheet } from "@mui/joy";
+import { getAvgTimeTakenByTopic } from "@/api/charts";
 
 const TimeTakenByTopic = () => {
-  const { isAuthenticated, user } = useAuth();
   const [chartData, setChartData] = useState({ data: [], keys: [] });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      API.get(`/api/avg-time-taken/${user.id}/topic/1`).then((data) => {
-        const { results } = data;
-        setChartData({
-          ...chartData,
-          data: results.map((e) => ({ ...e, avg: parseInt(e.avg) })),
-          keys: results.map((e) => "avg"),
-        });
+    getAvgTimeTakenByTopic().then((data) => {
+      const { results } = data;
+      setChartData({
+        ...chartData,
+        data: results.map((e) => ({ ...e, avg: parseInt(e.avg) })),
+        keys: results.map((e) => "avg"),
       });
-    }
+    });
   }, []);
 
   return (

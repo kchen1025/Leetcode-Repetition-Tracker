@@ -5,7 +5,9 @@ import {
   getAvgTimeTaken,
   getAvgTimeTakenByTopic,
   getFailedProportions,
+  getMetadata,
 } from "../../controllers/analyticsController.js";
+import { getQuestions } from "../../controllers/questionsController.js";
 
 export const apiRouter = express.Router();
 
@@ -22,15 +24,15 @@ apiRouter.get("/current_user", requireLogin, async (req, res) => {
   res.send(req.user);
 });
 
-apiRouter.get("/avg-time-taken/:accountId", requireLogin, getAvgTimeTaken);
+apiRouter.get("/questions", requireLogin, getQuestions);
+
+apiRouter.get("/avg-time-taken", requireLogin, getAvgTimeTaken);
 apiRouter.get(
-  "/avg-time-taken/:accountId/topic/:topicId",
+  "/avg-time-taken/topic/:topicId",
   requireLogin,
   getAvgTimeTakenByTopic
 );
 
-apiRouter.get(
-  "/failed-proportions/:accountId",
-  requireLogin,
-  getFailedProportions
-);
+apiRouter.get("/failed-proportions", requireLogin, getFailedProportions);
+
+apiRouter.get("/metadata/topic/:topicId", requireLogin, getMetadata);

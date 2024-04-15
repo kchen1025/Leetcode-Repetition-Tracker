@@ -2,11 +2,12 @@ import {
   getAvgTimeTakenDB,
   getAvgTimeTakenByTopicDB,
   getFailedProportionsDB,
+  getMetadataDB,
 } from "../db/analytics.js";
 
 export async function getAvgTimeTaken(req, res) {
   try {
-    const results = await getAvgTimeTakenDB(req.params.accountId);
+    const results = await getAvgTimeTakenDB(req.user.id);
     res.status(200).send({ results });
   } catch (error) {
     console.error(error);
@@ -17,7 +18,7 @@ export async function getAvgTimeTaken(req, res) {
 export async function getAvgTimeTakenByTopic(req, res) {
   try {
     const results = await getAvgTimeTakenByTopicDB(
-      req.params.accountId,
+      req.user.id,
       req.params.topicId
     );
     res.status(200).send({ results });
@@ -29,7 +30,17 @@ export async function getAvgTimeTakenByTopic(req, res) {
 
 export async function getFailedProportions(req, res) {
   try {
-    const results = await getFailedProportionsDB(req.params.accountId);
+    const results = await getFailedProportionsDB(req.user.id);
+    res.status(200).send({ results });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "An error occurred" });
+  }
+}
+
+export async function getMetadata(req, res) {
+  try {
+    const results = await getMetadataDB(req.user.id, req.params.topicId);
     res.status(200).send({ results });
   } catch (error) {
     console.error(error);

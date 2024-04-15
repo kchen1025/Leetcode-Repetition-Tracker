@@ -1,25 +1,21 @@
 import { Bar } from "@nivo/bar";
 import { useEffect, useState } from "react";
-import { API } from "@/utils";
-import { useAuth } from "@/context/AuthContext";
 import { Sheet } from "@mui/joy";
+import { getFailedProportions } from "@/api/charts";
 
-const TimeTakenByTopic = () => {
-  const { isAuthenticated, user } = useAuth();
+const StrugglesByTopic = () => {
   const [chartData, setChartData] = useState({ data: [], keys: [] });
 
   useEffect(() => {
-    if (isAuthenticated) {
-      API.get(`/api/failed-proportions/${user.id}`).then((data) => {
-        const { results } = data;
-        console.log(results);
-        setChartData({
-          ...chartData,
-          data: results.map((e) => ({ ...e, avg: parseInt(e.avg) })),
-          keys: results.map((e) => "avg"),
-        });
+    getFailedProportions().then((data) => {
+      const { results } = data;
+      console.log(results);
+      setChartData({
+        ...chartData,
+        data: results.map((e) => ({ ...e, avg: parseInt(e.avg) })),
+        keys: results.map((e) => "avg"),
       });
-    }
+    });
   }, []);
 
   return (
@@ -45,4 +41,4 @@ const TimeTakenByTopic = () => {
   );
 };
 
-export default TimeTakenByTopic;
+export default StrugglesByTopic;

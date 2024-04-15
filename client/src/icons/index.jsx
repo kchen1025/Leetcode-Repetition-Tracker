@@ -1,3 +1,5 @@
 import MenuIcon from "./MenuIcon";
+import ArrowDownIcon from "./ArrowDownIcon";
+import ArrowUpIcon from "./ArrowUpIcon";
 
-export { MenuIcon };
+export { MenuIcon, ArrowDownIcon, ArrowUpIcon };
