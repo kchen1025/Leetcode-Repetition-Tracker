@@ -20,3 +20,22 @@ export async function getQuestionsDB(accountId) {
   );
   return results;
 }
+
+export async function getTagsDB(accountId) {
+  const [results, metadata] = await db.sequelize.query(
+    `
+SELECT
+    aq.tag    
+FROM
+    account_question aq
+WHERE
+    aq.account_id = :accountId
+GROUP BY
+    aq.tag
+  `,
+    {
+      replacements: { accountId },
+    }
+  );
+  return results;
+}

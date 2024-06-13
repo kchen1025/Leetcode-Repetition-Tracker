@@ -2,6 +2,7 @@ import { Grid } from "@mui/joy";
 import TimeTaken from "./components/TimeTaken";
 import TimeTakenByTopic from "./components/TimeTakenByTopic";
 import StrugglesByTopic from "./components/StrugglesByTopic";
+import CalendarByTopic from "./components/CalendarByTopic";
 
 const Home = () => {
   return (
@@ -15,7 +16,9 @@ const Home = () => {
       <Grid l={12} xl={6}>
         <StrugglesByTopic />
       </Grid>
-      <Grid l={12} xl={6}></Grid>
+      <Grid l={12} xl={6}>
+        <CalendarByTopic />
+      </Grid>
     </Grid>
   );
 };

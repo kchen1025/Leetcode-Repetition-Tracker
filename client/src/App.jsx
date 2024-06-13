@@ -1,6 +1,6 @@
 import "@fontsource/inter";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CssVarsProvider } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

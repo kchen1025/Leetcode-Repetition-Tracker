@@ -7,7 +7,11 @@ import {
   getFailedProportions,
   getMetadata,
 } from "../../controllers/analyticsController.js";
-import { getQuestions } from "../../controllers/questionsController.js";
+import {
+  getQuestions,
+  getTags,
+} from "../../controllers/questionsController.js";
+import { getCalendarByTag } from "../../controllers/calendarController.js";
 
 export const apiRouter = express.Router();
 
@@ -25,6 +29,7 @@ apiRouter.get("/current_user", requireLogin, async (req, res) => {
 });
 
 apiRouter.get("/questions", requireLogin, getQuestions);
+apiRouter.get("/questions/tags", requireLogin, getTags);
 
 apiRouter.get("/avg-time-taken", requireLogin, getAvgTimeTaken);
 apiRouter.get(
@@ -32,6 +37,8 @@ apiRouter.get(
   requireLogin,
   getAvgTimeTakenByTopic
 );
+
+apiRouter.get("/calendar/tag", requireLogin, getCalendarByTag);
 
 apiRouter.get("/failed-proportions", requireLogin, getFailedProportions);
 

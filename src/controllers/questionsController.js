@@ -1,4 +1,4 @@
-import { getQuestionsDB } from "../db/questions.js";
+import { getQuestionsDB, getTagsDB } from "../db/questions.js";
 import { pivot } from "../utils/pivot.js";
 
 export async function getQuestions(req, res) {
@@ -52,6 +52,17 @@ export async function getQuestions(req, res) {
     );
 
     res.status(200).send({ results: reducedQuestions });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "An error occurred" });
+  }
+}
+
+export async function getTags(req, res) {
+  try {
+    const results = await getTagsDB(req.user.id);
+
+    res.status(200).send({ results });
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "An error occurred" });
